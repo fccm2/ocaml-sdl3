@@ -1,4 +1,4 @@
-all: sdl3.cmxa
+all: sdl3.cmxa sdl3.cma
 
 sdl3.cmi: sdl3.mli
 	ocamlc -c $<
