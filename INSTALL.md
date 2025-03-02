@@ -6,7 +6,7 @@ of sdl3 with the following commands:
 ```
 wget https://github.com/libsdl-org/SDL/releases/download/release-3.2.6/SDL3-3.2.6.tar.gz
 tar xzf SDL3-3.2.6.tar.gz
-cd SDL3-release/
+cd SDL-release-3.2.6/
 cmake .
 make
 sudo make install
