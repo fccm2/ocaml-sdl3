@@ -1,0 +1,13 @@
+*.o
+*.a
+*.cmi
+*.cmo
+*.cma
+*.cmx
+*.cmxa
+*.cmxs
+*.cmt
+*.so
+*.opt
+*.exe
+_*
