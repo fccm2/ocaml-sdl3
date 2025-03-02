@@ -1,7 +1,9 @@
 INCLUDE_DIR = +sdl3
 #INCLUDE_DIR = ../src
 
-test.opt: test.ml
+all: test.opt test7.opt
+
+%.opt: %.ml
 	ocamlopt -I $(INCLUDE_DIR) sdl3.cmxa $< -o $@
 
 clean:
