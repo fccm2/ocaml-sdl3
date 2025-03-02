@@ -1,5 +1,5 @@
-INCLUDE_DIR = +sdl3
-#INCLUDE_DIR = ../src
+#INCLUDE_DIR = +sdl3
+INCLUDE_DIR = ../src
 
 all: test.opt test7.opt
 
