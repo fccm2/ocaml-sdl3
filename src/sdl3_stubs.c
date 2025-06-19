@@ -232,6 +232,14 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
             val_event = Val_key_down_event(40);
             break;
 
+        case SDL_SCANCODE_PAGEUP:
+            val_event = Val_key_down_event(41);
+            break;
+
+        case SDL_SCANCODE_PAGEDOWN:
+            val_event = Val_key_down_event(42);
+            break;
+
         default: {
             switch (event->key.key) {
             case SDLK_A: val_event = Val_key_down_event(4); break;

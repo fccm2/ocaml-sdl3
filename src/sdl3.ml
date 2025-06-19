@@ -21,6 +21,8 @@ type t =
   | N_0 | N_1 | N_2 | N_3 | N_4
   | N_5 | N_6 | N_7 | N_8 | N_9
   | Space
+  | PageUp
+  | PageDown
 end
 
 type event =
