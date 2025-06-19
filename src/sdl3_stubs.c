@@ -7,6 +7,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
+#define CAML_NAME_SPACE 1
 #include <caml/mlvalues.h>
 #include <caml/callback.h>
 #include <caml/memory.h>
