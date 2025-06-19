@@ -1,0 +1,6 @@
+version="initial-draft"
+description="OCaml Interface for SDL3"
+requires=""
+archive(byte)="sdl3.cma"
+archive(native)="sdl3.cmxa"
+linkopts="-cclib -lSDL3"
