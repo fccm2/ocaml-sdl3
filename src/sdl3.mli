@@ -32,6 +32,7 @@ module Render : sig
   val create_window_and_renderer : int * int -> window * renderer
   val set_draw_color : renderer -> int * int * int -> unit
   val fill_rect : renderer -> int * int * int * int -> unit
+  val draw_rect : renderer -> int * int * int * int -> unit
   val clear : renderer -> unit
   val present : renderer -> unit
   val destroy_renderer : renderer -> unit

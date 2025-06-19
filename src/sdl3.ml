@@ -55,6 +55,9 @@ module Render = struct
   external fill_rect : renderer -> int * int * int * int -> unit
     = "caml_SDL_RenderFillRect"
 
+  external draw_rect : renderer -> int * int * int * int -> unit
+    = "caml_SDL_RenderRect"
+
   external destroy_renderer : renderer -> unit
     = "caml_SDL_DestroyRenderer"
 

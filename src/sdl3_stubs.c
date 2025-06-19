@@ -228,6 +228,19 @@ caml_SDL_RenderFillRect(value rn, value rc)
 }
 
 CAMLprim value
+caml_SDL_RenderRect(value rn, value rc)
+{
+    SDL_FRect r;
+    r.x = Int_val(Field(rc, 0));
+    r.y = Int_val(Field(rc, 1));
+    r.w = Int_val(Field(rc, 2));
+    r.h = Int_val(Field(rc, 3));
+    bool st = SDL_RenderRect(SDL_Renderer_val(rn), &r);
+    if (!st) caml_failwith("SDL_RenderRect()");
+    return Val_unit;
+}
+
+CAMLprim value
 caml_SDL_DestroyRenderer(value r)
 {
     SDL_DestroyRenderer(SDL_Renderer_val(r));
