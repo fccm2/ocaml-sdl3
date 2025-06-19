@@ -48,6 +48,7 @@ module UserApp = struct
             | Scancode.Z -> Printf.printf " Z \n%!";
             | c -> Printf.printf " %c \n%!" (List.assoc c assoc_c)
             end
+        | _ -> ()
       end;
       ()
     );
