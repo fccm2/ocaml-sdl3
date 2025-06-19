@@ -86,6 +86,9 @@ end
 module Timer = struct
   external get_ticks : unit -> int
     = "caml_SDL_GetTicks"
+
+  external delay : int -> unit
+    = "caml_SDL_Delay"
 end
 
 

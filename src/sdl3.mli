@@ -64,6 +64,7 @@ end
 
 module Timer : sig
   val get_ticks : unit -> int
+  val delay : int -> unit
 end
 
 module type APP = sig

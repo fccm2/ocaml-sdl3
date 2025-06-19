@@ -135,6 +135,13 @@ caml_SDL_GetTicks(value u)
     return Val_long(t);
 }
 
+CAMLprim value
+caml_SDL_Delay(value ms)
+{
+    SDL_Delay(Long_val(ms));
+    return Val_unit;
+}
+
 
 /* Caml Callbacks */
 
