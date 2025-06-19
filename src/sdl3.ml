@@ -29,9 +29,14 @@ type event =
   | Unhandled_event
   | Mouse_motion of int * int
   | Key_down_event of Scancode.t
+  | Event_Quit
 
 external init : unit -> unit
   = "caml_SDL_Init"
+
+external quit : unit -> unit
+  = "caml_SDL_Quit"
+
 
 module Render = struct
 
@@ -63,6 +68,11 @@ module Timer = struct
 
   external delay : int -> unit
     = "caml_SDL_Delay"
+end
+
+module Events = struct
+  external poll_event : unit -> event option
+    = "caml_SDL_PollEvent"
 end
 
 

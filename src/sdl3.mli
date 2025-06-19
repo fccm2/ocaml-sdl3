@@ -23,8 +23,10 @@ type event =
   | Unhandled_event
   | Mouse_motion of int * int
   | Key_down_event of Scancode.t
+  | Event_Quit
 
 val init : unit -> unit
+val quit : unit -> unit
 
 module Render : sig
   val create_window_and_renderer : int * int -> window * renderer
@@ -34,6 +36,10 @@ module Render : sig
   val present : renderer -> unit
   val destroy_renderer : renderer -> unit
   val destroy_window : window -> unit
+end
+
+module Events : sig
+  val poll_event : unit -> event option
 end
 
 module Timer : sig

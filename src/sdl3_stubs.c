@@ -40,6 +40,43 @@ static value Val_sdlrenderer(SDL_Renderer *r)
   *((SDL_Renderer **) Data_abstract_val(v))
 
 
+/* Option values */
+
+static value
+Val_some(value v)
+{
+    CAMLparam1(v);
+    CAMLlocal1(some);
+    some = caml_alloc(1, 0);
+    Store_field(some, 0, v);
+    CAMLreturn(some);
+}
+
+
+/* Convert Events to ocaml values */
+
+static value
+Val_mouse_motion_event(int x, int y)
+{
+    CAMLparam0();
+    CAMLlocal1(m);
+    m = caml_alloc(2, 0);
+    Store_field(m, 0, Val_int(x));
+    Store_field(m, 1, Val_int(y));
+    CAMLreturn(m);
+}
+
+static value
+Val_key_down_event(int c)
+{
+    CAMLparam0();
+    CAMLlocal1(m);
+    m = caml_alloc(1, 1);
+    Store_field(m, 0, Val_int(c));
+    CAMLreturn(m);
+}
+
+
 /* Function Bindings */
 
 CAMLprim value
@@ -48,6 +85,13 @@ caml_SDL_Init(value u)
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         caml_failwith("SDL_Init()");
     }
+    return Val_unit;
+}
+
+CAMLprim value
+caml_SDL_Quit(value u)
+{
+    SDL_Quit();
     return Val_unit;
 }
 
@@ -142,6 +186,22 @@ caml_SDL_Delay(value ms)
     return Val_unit;
 }
 
+CAMLprim value
+caml_SDL_PollEvent(value u)
+{
+    SDL_Event event;
+    bool r = SDL_PollEvent(&event);
+    if (!r) return Val_none;
+    switch (event.type) {
+    case SDL_EVENT_QUIT:
+        return Val_some(Val_int(1));
+    case SDL_EVENT_MOUSE_MOTION:
+        return Val_some(Val_mouse_motion_event(event.motion.x, event.motion.y));
+    default:
+        return Val_some(Val_int(0));
+    }
+}
+
 
 /* Caml Callbacks */
 
@@ -173,28 +233,6 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     caml_callback(*closure_init, Val_unit);
 
     return SDL_APP_CONTINUE;
-}
-
-
-static value
-Val_mouse_motion_event(int x, int y)
-{
-    CAMLparam0();
-    CAMLlocal1(m);
-    m = caml_alloc(2, 0);
-    Store_field(m, 0, Val_int(x));
-    Store_field(m, 1, Val_int(y));
-    CAMLreturn(m);
-}
-
-static value
-Val_key_down_event(int c)
-{
-    CAMLparam0();
-    CAMLlocal1(m);
-    m = caml_alloc(1, 1);
-    Store_field(m, 0, Val_int(c));
-    CAMLreturn(m);
 }
 
 
