@@ -76,6 +76,74 @@ Val_key_down_event(int c)
     CAMLreturn(m);
 }
 
+static value
+Val_event_key_down(SDL_KeyboardEvent *key)
+{
+    SDL_Scancode scancode = key->scancode;
+    switch (scancode) {
+        /* Directions */
+        case SDL_SCANCODE_LEFT:
+            return Val_key_down_event(0);
+        case SDL_SCANCODE_RIGHT:
+            return Val_key_down_event(1);
+        case SDL_SCANCODE_UP:
+            return Val_key_down_event(2);
+        case SDL_SCANCODE_DOWN:
+            return Val_key_down_event(3);
+
+        case SDL_SCANCODE_SPACE:
+            return Val_key_down_event(40);
+
+        case SDL_SCANCODE_PAGEUP:
+            return Val_key_down_event(41);
+
+        case SDL_SCANCODE_PAGEDOWN:
+            return Val_key_down_event(42);
+
+        default: {
+            switch (key->key) {
+            case SDLK_A: return Val_key_down_event(4);
+            case SDLK_B: return Val_key_down_event(5);
+            case SDLK_C: return Val_key_down_event(6);
+            case SDLK_D: return Val_key_down_event(7);
+            case SDLK_E: return Val_key_down_event(8);
+            case SDLK_F: return Val_key_down_event(9);
+            case SDLK_G: return Val_key_down_event(10);
+            case SDLK_H: return Val_key_down_event(11);
+            case SDLK_I: return Val_key_down_event(12);
+            case SDLK_J: return Val_key_down_event(13);
+            case SDLK_K: return Val_key_down_event(14);
+            case SDLK_L: return Val_key_down_event(15);
+            case SDLK_M: return Val_key_down_event(16);
+            case SDLK_N: return Val_key_down_event(17);
+            case SDLK_O: return Val_key_down_event(18);
+            case SDLK_P: return Val_key_down_event(19);
+            case SDLK_Q: return Val_key_down_event(20);
+            case SDLK_R: return Val_key_down_event(21);
+            case SDLK_S: return Val_key_down_event(22);
+            case SDLK_T: return Val_key_down_event(23);
+            case SDLK_U: return Val_key_down_event(24);
+            case SDLK_V: return Val_key_down_event(25);
+            case SDLK_W: return Val_key_down_event(26);
+            case SDLK_X: return Val_key_down_event(27);
+            case SDLK_Y: return Val_key_down_event(28);
+            case SDLK_Z: return Val_key_down_event(29);
+
+            case SDLK_0: return Val_key_down_event(30);
+            case SDLK_1: return Val_key_down_event(31);
+            case SDLK_2: return Val_key_down_event(32);
+            case SDLK_3: return Val_key_down_event(33);
+            case SDLK_4: return Val_key_down_event(34);
+            case SDLK_5: return Val_key_down_event(35);
+            case SDLK_6: return Val_key_down_event(36);
+            case SDLK_7: return Val_key_down_event(37);
+            case SDLK_8: return Val_key_down_event(38);
+            case SDLK_9: return Val_key_down_event(39);
+            }
+        }
+    }
+}
+
 
 /* Function Bindings */
 
@@ -244,81 +312,16 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
         return SDL_APP_SUCCESS;
 
     case SDL_EVENT_KEY_DOWN:
-      { SDL_Scancode key_code = event->key.scancode;
+      { SDL_Scancode scancode = event->key.scancode;
         val_event = Val_int(0);
-        switch (key_code) {
+        switch (scancode) {
         /* Quit */
         case SDL_SCANCODE_ESCAPE:
         //case SDL_SCANCODE_Q:
             return SDL_APP_SUCCESS;
-
-        /* Directions */
-        case SDL_SCANCODE_LEFT:
-            val_event = Val_key_down_event(0);
             break;
-        case SDL_SCANCODE_RIGHT:
-            val_event = Val_key_down_event(1);
-            break;
-        case SDL_SCANCODE_UP:
-            val_event = Val_key_down_event(2);
-            break;
-        case SDL_SCANCODE_DOWN:
-            val_event = Val_key_down_event(3);
-            break;
-
-        case SDL_SCANCODE_SPACE:
-            val_event = Val_key_down_event(40);
-            break;
-
-        case SDL_SCANCODE_PAGEUP:
-            val_event = Val_key_down_event(41);
-            break;
-
-        case SDL_SCANCODE_PAGEDOWN:
-            val_event = Val_key_down_event(42);
-            break;
-
-        default: {
-            switch (event->key.key) {
-            case SDLK_A: val_event = Val_key_down_event(4); break;
-            case SDLK_B: val_event = Val_key_down_event(5); break;
-            case SDLK_C: val_event = Val_key_down_event(6); break;
-            case SDLK_D: val_event = Val_key_down_event(7); break;
-            case SDLK_E: val_event = Val_key_down_event(8); break;
-            case SDLK_F: val_event = Val_key_down_event(9); break;
-            case SDLK_G: val_event = Val_key_down_event(10); break;
-            case SDLK_H: val_event = Val_key_down_event(11); break;
-            case SDLK_I: val_event = Val_key_down_event(12); break;
-            case SDLK_J: val_event = Val_key_down_event(13); break;
-            case SDLK_K: val_event = Val_key_down_event(14); break;
-            case SDLK_L: val_event = Val_key_down_event(15); break;
-            case SDLK_M: val_event = Val_key_down_event(16); break;
-            case SDLK_N: val_event = Val_key_down_event(17); break;
-            case SDLK_O: val_event = Val_key_down_event(18); break;
-            case SDLK_P: val_event = Val_key_down_event(19); break;
-            case SDLK_Q: val_event = Val_key_down_event(20); break;
-            case SDLK_R: val_event = Val_key_down_event(21); break;
-            case SDLK_S: val_event = Val_key_down_event(22); break;
-            case SDLK_T: val_event = Val_key_down_event(23); break;
-            case SDLK_U: val_event = Val_key_down_event(24); break;
-            case SDLK_V: val_event = Val_key_down_event(25); break;
-            case SDLK_W: val_event = Val_key_down_event(26); break;
-            case SDLK_X: val_event = Val_key_down_event(27); break;
-            case SDLK_Y: val_event = Val_key_down_event(28); break;
-            case SDLK_Z: val_event = Val_key_down_event(29); break;
-
-            case SDLK_0: val_event = Val_key_down_event(30); break;
-            case SDLK_1: val_event = Val_key_down_event(31); break;
-            case SDLK_2: val_event = Val_key_down_event(32); break;
-            case SDLK_3: val_event = Val_key_down_event(33); break;
-            case SDLK_4: val_event = Val_key_down_event(34); break;
-            case SDLK_5: val_event = Val_key_down_event(35); break;
-            case SDLK_6: val_event = Val_key_down_event(36); break;
-            case SDLK_7: val_event = Val_key_down_event(37); break;
-            case SDLK_8: val_event = Val_key_down_event(38); break;
-            case SDLK_9: val_event = Val_key_down_event(39); break;
-            }
-          } break;
+        default:
+            val_event = Val_event_key_down(&(event->key));
         }
       } break;
 
