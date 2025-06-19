@@ -4,9 +4,9 @@ You don't need pkg-config yet to compile these sources.
 You can download, compile, and install the last stable release
 of sdl3 with the following commands:  
 ```
-wget https://github.com/libsdl-org/SDL/releases/download/release-3.2.6/SDL3-3.2.6.tar.gz
-tar xzf SDL3-3.2.6.tar.gz
-cd SDL-release-3.2.6/
+wget https://github.com/libsdl-org/SDL/releases/download/release-3.2.8/SDL3-3.2.8.tar.gz
+tar xzf SDL3-3.2.8.tar.gz
+cd SDL-release-3.2.8/
 cmake .
 make
 sudo make install
