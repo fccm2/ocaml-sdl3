@@ -228,6 +228,10 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
             val_event = Val_key_down_event(3);
             break;
 
+        case SDL_SCANCODE_SPACE:
+            val_event = Val_key_down_event(40);
+            break;
+
         default: {
             switch (event->key.key) {
             case SDLK_A: val_event = Val_key_down_event(4); break;

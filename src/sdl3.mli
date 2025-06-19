@@ -7,42 +7,14 @@ type t =
   | Right
   | Up
   | Down
-  | A
-  | B
-  | C
-  | D
-  | E
-  | F
-  | G
-  | H
-  | I
-  | J
-  | K
-  | L
-  | M
-  | N
-  | O
-  | P
-  | Q
-  | R
-  | S
-  | T
-  | U
-  | V
-  | W
-  | X
-  | Y
-  | Z
-  | N_0
-  | N_1
-  | N_2
-  | N_3
-  | N_4
-  | N_5
-  | N_6
-  | N_7
-  | N_8
-  | N_9
+  | A | B | C | D | E | F
+  | G | H | I | J | K | L
+  | M | N | O | P | Q | R
+  | S | T | U | V | W | X
+  | Y | Z
+  | N_0 | N_1 | N_2 | N_3 | N_4
+  | N_5 | N_6 | N_7 | N_8 | N_9
+  | Space
 end
 
 type event =
