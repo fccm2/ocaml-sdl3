@@ -59,6 +59,7 @@ end
 
 module Texture : sig
   val create_texture_from_surface : renderer -> surface -> texture
+  val destroy : texture -> unit
 end
 
 module type APP = sig
