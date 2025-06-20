@@ -368,6 +368,8 @@ caml_SDL_PollEvent(value u)
         return Val_some(Val_int(1));
     case SDL_EVENT_MOUSE_MOTION:
         return Val_some(Val_mouse_motion_event(event.motion.x, event.motion.y));
+    case SDL_EVENT_KEY_DOWN:
+        return Val_some(Val_event_key_down(&(event.key)));
     default:
         return Val_some(Val_int(0));
     }
