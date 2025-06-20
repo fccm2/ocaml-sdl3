@@ -10,7 +10,7 @@ let () =
     | None -> ()
     | Some ev ->
         match ev with
-        | Event_Quit -> Sdl3.quit (); exit 0
+        | Quit_event -> Sdl3.quit (); exit 0
         | _ -> event_loop ()
   in
   let rec aux () =

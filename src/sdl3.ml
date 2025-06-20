@@ -32,7 +32,7 @@ type event =
   | Unhandled_event
   | Mouse_motion of int * int
   | Key_down_event of Scancode.t
-  | Event_Quit
+  | Quit_event
 
 external init : unit -> unit
   = "caml_SDL_Init"
