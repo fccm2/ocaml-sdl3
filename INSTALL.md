@@ -12,6 +12,6 @@ make
 sudo make install
 ```
 
-You need about 160M of free space left on device to compile these
-sources, but only a little bit more than 16M are installed.
+You need about 160M of free space left on device to compile these sources,  
+but only a little bit more than 16M are installed.
 
