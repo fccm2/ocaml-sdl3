@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>tutorial for ocaml-sdl3</title>
+<style>
+pre { white-space:pre-wrap; font-family:monospace; color:#ffffff; background-color:#000000; }
+body { font-family:monospace; color:#000000; background-color:#ffffff; }
+* { font-size:1em; }
+.Statement { color:#ffff00; }
+.PreProc { color:#5fd7ff; }
+.Constant { color:#ff40ff; }
+body { padding-right:38%; }
+pre { padding:1px; }
+code { color:#ffffff; background-color:#000000; }
+</style>
+</head>
+<body>
+
+<h3>sdl3_the-functional-way</h3>
+
+<p>This sdl3 interface can be used with a functional loop.</p>
+
+<pre class="ocaml-code">
+<span class="Statement">open</span> <span class="PreProc">Sdl3</span>
+
+<span class="Statement">let</span> <span class="Constant">()</span> <span class="Statement">=</span>
+  <span class="PreProc">Sdl3</span>.init <span class="Constant">()</span><span class="Statement">;</span>
+  <span class="Statement">let</span> w, r <span class="Statement">=</span> <span class="PreProc">Render</span>.create_window_and_renderer <span class="Statement">(</span><span class="Constant">340</span>, <span class="Constant">220</span><span class="Statement">)</span> <span class="Statement">in</span>
+
+  <span class="Statement">let</span> <span class="Statement">rec</span> aux i <span class="Statement">=</span>
+    <span class="PreProc">Printf</span>.printf <span class="Constant">&quot;&gt; %d\n%!&quot;</span> i<span class="Statement">;</span>
+    <span class="PreProc">Render</span>.set_draw_color r <span class="Statement">(</span><span class="Constant">20</span>, <span class="Constant">80</span>, <span class="Constant">210</span><span class="Statement">)</span><span class="Statement">;</span>
+    <span class="PreProc">Render</span>.clear r<span class="Statement">;</span>
+    <span class="PreProc">Render</span>.present r<span class="Statement">;</span>
+    <span class="PreProc">Timer</span>.delay <span class="Constant">1000</span><span class="Statement">;</span>
+    <span class="Statement">if</span> i &gt;= <span class="Constant">6</span> <span class="Statement">then</span> <span class="Statement">(</span><span class="PreProc">Sdl3</span>.quit <span class="Constant">()</span><span class="Statement">;</span> exit <span class="Constant">0</span><span class="Statement">)</span>
+    <span class="Statement">else</span> aux <span class="Statement">(</span>succ i<span class="Statement">)</span>
+  <span class="Statement">in</span>
+  aux <span class="Constant">0</span>
+<span class="Statement">;;</span>
+</pre>
+
+<p>This loop will run about 6 times, with a pause of one second, at each step.</p>
+
+<p><code><span class="PreProc">Render</span>.clear</code> clears the drawing area with a selected color.</p>
+
+<p><code><span class="PreProc">Render</span>.present</code> should be called at the end of every frame,
+after each sequence of drawing commands.</p>
+
+<p><code><span class="PreProc">Timer</span>.delay <span class="Constant">1000</span><span class="Statement">;</span></code>
+will make a pause for 1 second (1000 milliseconds).</p>
+
+<p>You can try to select random values between 0 and 255 (included), for
+<code><span class="PreProc">Render</span>.set_draw_color</code>, with
+<code><span class="PreProc">Random</span>.int <span class="Constant">256</span></code>.</p>
+
+<hr />
+
+<h3>the-event-loop</h3>
+
+<pre class="ocaml-code">
+<span class="Statement">open</span> <span class="PreProc">Sdl3</span>
+
+<span class="Statement">let</span> <span class="Constant">()</span> <span class="Statement">=</span>
+  <span class="PreProc">Sdl3</span>.init <span class="Constant">()</span><span class="Statement">;</span>
+  <span class="Statement">let</span> w, r <span class="Statement">=</span> <span class="PreProc">Render</span>.create_window_and_renderer <span class="Statement">(</span><span class="Constant">340</span>, <span class="Constant">220</span><span class="Statement">)</span> <span class="Statement">in</span>
+
+  <span class="Statement">let</span> <span class="Statement">rec</span> event_loop <span class="Constant">()</span> <span class="Statement">=</span>
+    <span class="Statement">let</span> e <span class="Statement">=</span> <span class="PreProc">Events</span>.poll_event <span class="Constant">()</span> <span class="Statement">in</span>
+    <span class="Statement">match</span> e <span class="Statement">with</span>
+    <span class="Statement">|</span> <span class="Constant">None</span> <span class="Statement">-&gt;</span> <span class="Constant">()</span>
+    <span class="Statement">|</span> <span class="Constant">Some</span> ev <span class="Statement">-&gt;</span>
+        <span class="Statement">match</span> ev <span class="Statement">with</span>
+        <span class="Statement">|</span> <span class="Constant">Event_Quit</span> <span class="Statement">-&gt;</span> <span class="PreProc">Sdl3</span>.quit <span class="Constant">()</span><span class="Statement">;</span> exit <span class="Constant">0</span>
+        <span class="Statement">|</span> <span class="Statement">_</span> <span class="Statement">-&gt;</span> event_loop <span class="Constant">()</span>
+  <span class="Statement">in</span>
+  <span class="Statement">let</span> <span class="Statement">rec</span> aux <span class="Constant">()</span> <span class="Statement">=</span>
+    event_loop <span class="Constant">()</span><span class="Statement">;</span>
+    <span class="PreProc">Render</span>.set_draw_color r <span class="Statement">(</span><span class="Constant">20</span>, <span class="Constant">80</span>, <span class="Constant">210</span><span class="Statement">)</span><span class="Statement">;</span>
+    <span class="PreProc">Render</span>.clear r<span class="Statement">;</span>
+    <span class="PreProc">Render</span>.present r<span class="Statement">;</span>
+    <span class="PreProc">Timer</span>.delay <span class="Constant">600</span><span class="Statement">;</span>
+    aux <span class="Constant">()</span>
+  <span class="Statement">in</span>
+  aux <span class="Constant">()</span>
+<span class="Statement">;;</span>
+</pre>
+
+<p>Why <code><span class="PreProc">Events</span>.poll_event</code> should be called in a loop?</p>
+<p>Because several events can arrive, at each step of the main game-loop (aux).</p>
+<p>The event-loop should only return when poll_event returns None.</p>
+
+<p><code><span class="Constant">Event_Quit</span></code> is the event that occures when the user
+clics on the little cross of the window handle at the top-right.</p>
+
+<hr />
+
+<h3>the-end</h3>
+
+</body>
+</html>
