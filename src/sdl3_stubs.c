@@ -126,6 +126,9 @@ Val_event_key_down(SDL_KeyboardEvent *key)
         case SDL_SCANCODE_PAGEDOWN:
             return Val_key_down_event(42);
 
+        case SDL_SCANCODE_ESCAPE:
+            return Val_key_down_event(43);
+
         default: {
             switch (key->key) {
             case SDLK_A: return Val_key_down_event(4);

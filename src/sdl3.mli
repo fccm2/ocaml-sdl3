@@ -19,6 +19,7 @@ type t =
   | Space
   | PageUp
   | PageDown
+  | Escape
 end
 
 type event =
