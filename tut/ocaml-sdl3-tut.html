@@ -72,7 +72,7 @@ will make a pause for 1 second (1000 milliseconds).</p>
     <span class="Statement">|</span> <span class="Constant">None</span> <span class="Statement">-&gt;</span> <span class="Constant">()</span>
     <span class="Statement">|</span> <span class="Constant">Some</span> ev <span class="Statement">-&gt;</span>
         <span class="Statement">match</span> ev <span class="Statement">with</span>
-        <span class="Statement">|</span> <span class="Constant">Event_Quit</span> <span class="Statement">-&gt;</span> <span class="PreProc">Sdl3</span>.quit <span class="Constant">()</span><span class="Statement">;</span> exit <span class="Constant">0</span>
+        <span class="Statement">|</span> <span class="Constant">Quit_event</span> <span class="Statement">-&gt;</span> <span class="PreProc">Sdl3</span>.quit <span class="Constant">()</span><span class="Statement">;</span> exit <span class="Constant">0</span>
         <span class="Statement">|</span> <span class="Statement">_</span> <span class="Statement">-&gt;</span> event_loop <span class="Constant">()</span>
   <span class="Statement">in</span>
   <span class="Statement">let</span> <span class="Statement">rec</span> aux <span class="Constant">()</span> <span class="Statement">=</span>
@@ -91,7 +91,7 @@ will make a pause for 1 second (1000 milliseconds).</p>
 <p>Because several events can arrive, at each step of the main game-loop (aux).</p>
 <p>The event-loop should only return when poll_event returns None.</p>
 
-<p><code><span class="Constant">Event_Quit</span></code> is the event that occures when the user
+<p><code><span class="Constant">Quit_event</span></code> is the event that occures when the user
 clics on the little cross of the window handle at the top-right.</p>
 
 <hr />
