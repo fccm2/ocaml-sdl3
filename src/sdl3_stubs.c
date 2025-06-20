@@ -297,6 +297,7 @@ CAMLprim value
 caml_SDL_LoadBMP(value file)
 {
     SDL_Surface *surf = SDL_LoadBMP(String_val(file));
+    if (surf == NULL) caml_failwith("SDL_LoadBMP()");
     return Val_sdlsurface(surf);
 }
 
