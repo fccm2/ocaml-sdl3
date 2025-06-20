@@ -6,6 +6,8 @@
 
 type window
 type renderer
+type texture
+type surface
 
 module Scancode = struct
 type t =
@@ -58,6 +60,11 @@ module Render = struct
   external draw_rect : renderer -> int * int * int * int -> unit
     = "caml_SDL_RenderRect"
 
+  external render_texture : renderer -> texture ->
+      int * int * int * int ->
+      int * int * int * int -> unit
+    = "caml_SDL_RenderTexture"
+
   external destroy_renderer : renderer -> unit
     = "caml_SDL_DestroyRenderer"
 
@@ -76,6 +83,24 @@ end
 module Events = struct
   external poll_event : unit -> event option
     = "caml_SDL_PollEvent"
+end
+
+module Surface = struct
+  external load_bmp : file:string -> surface
+    = "caml_SDL_LoadBMP"
+
+  external destroy : surface -> unit
+    = "caml_SDL_DestroySurface"
+
+  external set_color_key : surface -> int * int * int -> unit
+    = "caml_SDL_SetSurfaceColorKey"
+end
+
+module Texture = struct
+  external create_texture_from_surface : renderer -> surface -> texture
+    = "caml_SDL_CreateTextureFromSurface"
+  external destroy : texture -> unit
+    = "caml_SDL_DestroyTexture"
 end
 
 

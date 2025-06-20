@@ -41,6 +41,31 @@ static value Val_sdlrenderer(SDL_Renderer *r)
   *((SDL_Renderer **) Data_abstract_val(v))
 
 
+/* Creating an ocaml value encapsulating a pointer to the SDL_Surface */
+static value Val_sdlsurface(SDL_Surface *surf)
+{
+    value v = caml_alloc(1, Abstract_tag);
+    *((SDL_Surface **) Data_abstract_val(v)) = surf;
+    return v;
+}
+
+#define SDL_Surface_val(v) \
+  *((SDL_Surface **) Data_abstract_val(v))
+
+
+/* Creating an ocaml value encapsulating a pointer to the SDL_Texture */
+static value Val_sdltexture(SDL_Texture *tex)
+{
+    value v = caml_alloc(1, Abstract_tag);
+    *((SDL_Texture **) Data_abstract_val(v)) = tex;
+    return v;
+}
+
+#define SDL_Texture_val(v) \
+  *((SDL_Texture **) Data_abstract_val(v))
+
+
+
 /* Option values */
 
 static value
@@ -265,6 +290,69 @@ CAMLprim value
 caml_SDL_Delay(value ms)
 {
     SDL_Delay(Long_val(ms));
+    return Val_unit;
+}
+
+CAMLprim value
+caml_SDL_LoadBMP(value file)
+{
+    SDL_Surface *surf = SDL_LoadBMP(String_val(file));
+    return Val_sdlsurface(surf);
+}
+
+CAMLprim value
+caml_SDL_DestroySurface(value surf)
+{
+    SDL_DestroySurface(SDL_Surface_val(surf));
+    return Val_unit;
+}
+
+CAMLprim value
+caml_SDL_SetSurfaceColorKey(value surf, value c)
+{
+    bool enabled = 1;
+    Uint32 key = 0x00000000;
+    Uint32 r = Int_val(Field(c, 0));
+    Uint32 g = Int_val(Field(c, 1));
+    Uint32 b = Int_val(Field(c, 2));
+    key |= (r << 16);
+    key |= (g << 8);
+    key |= (b);
+    bool st = SDL_SetSurfaceColorKey(SDL_Surface_val(surf), enabled, key);
+    return Val_unit;
+}
+
+CAMLprim value
+caml_SDL_CreateTextureFromSurface(value r, value s)
+{
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(SDL_Renderer_val(r), SDL_Surface_val(s));
+    return Val_sdltexture(tex);
+}
+
+CAMLprim value
+caml_SDL_DestroyTexture(value texture)
+{
+    SDL_DestroyTexture(SDL_Texture_val(texture));
+    return Val_unit;
+}
+
+CAMLprim value
+caml_SDL_RenderTexture(value r, value tex, value r_src, value r_dst)
+{
+    SDL_FRect r1;
+    SDL_FRect r2;
+
+    r1.x = Int_val(Field(r_src, 0));
+    r1.y = Int_val(Field(r_src, 1));
+    r1.w = Int_val(Field(r_src, 2));
+    r1.h = Int_val(Field(r_src, 3));
+
+    r2.x = Int_val(Field(r_dst, 0));
+    r2.y = Int_val(Field(r_dst, 1));
+    r2.w = Int_val(Field(r_dst, 2));
+    r2.h = Int_val(Field(r_dst, 3));
+
+    bool st = SDL_RenderTexture(SDL_Renderer_val(r), SDL_Texture_val(tex), &r1, &r2);
     return Val_unit;
 }
 

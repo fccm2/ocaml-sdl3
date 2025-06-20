@@ -1,5 +1,7 @@
 type window
 type renderer
+type texture
+type surface
 
 module Scancode : sig
 type t =
@@ -33,6 +35,7 @@ module Render : sig
   val set_draw_color : renderer -> int * int * int -> unit
   val fill_rect : renderer -> int * int * int * int -> unit
   val draw_rect : renderer -> int * int * int * int -> unit
+  val render_texture : renderer -> texture -> int * int * int * int -> int * int * int * int -> unit
   val clear : renderer -> unit
   val present : renderer -> unit
   val destroy_renderer : renderer -> unit
@@ -46,6 +49,16 @@ end
 module Timer : sig
   val get_ticks : unit -> int
   val delay : int -> unit
+end
+
+module Surface : sig
+  val load_bmp : file:string -> surface
+  val destroy : surface -> unit
+  val set_color_key : surface -> int * int * int -> unit
+end
+
+module Texture : sig
+  val create_texture_from_surface : renderer -> surface -> texture
 end
 
 module type APP = sig
