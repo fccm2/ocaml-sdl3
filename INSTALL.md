@@ -1,5 +1,5 @@
 You don't need pkg-config yet to compile these sources.  
- sudo apt-get install pkg-config
+$ sudo apt-get install pkg-config
 
 You can download, compile, and install the last stable release
 of sdl3 with the following commands:  
@@ -12,6 +12,6 @@ make
 sudo make install
 ```
 
-(You need about 160M of free space left on device to compile these
-sources.)
+You need about 160M of free space left on device to compile these
+sources, but only a little bit more than 16M are installed.
 
