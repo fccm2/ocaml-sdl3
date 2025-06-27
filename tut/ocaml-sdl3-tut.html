@@ -7,9 +7,11 @@
 pre { white-space:pre-wrap; font-family:monospace; color:#ffffff; background-color:#000000; }
 body { font-family:monospace; color:#000000; background-color:#ffffff; }
 * { font-size:1em; }
-.Statement { color:#ffff00; }
-.PreProc { color:#5fd7ff; }
-.Constant { color:#ff40ff; }
+.Statement { color: #ffff00; }
+.Identifier { color: #00ffff; font-weight: bold; }
+.Constant { color: #ff40ff; }
+.PreProc { color: #5fd7ff; }
+.Type { color: #87ffaf; }
 body { padding-right:38%; }
 pre { padding:1px; }
 code { color:#ffffff; background-color:#000000; }
@@ -93,6 +95,108 @@ will make a pause for 1 second (1000 milliseconds).</p>
 
 <p><code><span class="Constant">Quit_event</span></code> is the event that occures when the user
 clics on the little cross of the window handle at the top-right.</p>
+
+<hr />
+
+<h3>place-holders</h3>
+
+<p>You can draw the elements of your game with place-holders, if you don't have graphics yet.</p>
+<p>You can draw rectangles and squares first. Here is how to fill this shape, and draw its strokes:</p>
+
+<pre class="ocaml-code">
+  <span class="PreProc">Render</span>.set_draw_color r <span class="Statement">(</span><span class="Constant">60</span>, <span class="Constant">120</span>, <span class="Constant">250</span><span class="Statement">)</span><span class="Statement">;</span>
+  <span class="PreProc">Render</span>.fill_rect r <span class="Statement">(</span>x, y, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span><span class="Statement">;</span>
+</pre>
+
+
+<pre class="ocaml-code">
+  <span class="PreProc">Render</span>.set_draw_color r <span class="Statement">(</span><span class="Constant">2</span>, <span class="Constant">20</span>, <span class="Constant">120</span><span class="Statement">)</span><span class="Statement">;</span>
+  <span class="PreProc">Render</span>.draw_rect r <span class="Statement">(</span>x, y, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span><span class="Statement">;</span>
+</pre>
+
+<!--
+
+<pre class="ocaml-code">
+<span class="Statement">let</span> fill_rect r <span class="Statement">(</span>x, y<span class="Statement">)</span> <span class="Statement">=</span>
+  <span class="PreProc">Render</span>.set_draw_color r <span class="Statement">(</span><span class="Constant">60</span>, <span class="Constant">120</span>, <span class="Constant">250</span><span class="Statement">)</span><span class="Statement">;</span>
+  <span class="PreProc">Render</span>.fill_rect r <span class="Statement">(</span>x, y, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span><span class="Statement">;</span>
+<span class="Statement">;;</span>
+</pre>
+
+
+<pre class="ocaml-code">
+<span class="Statement">let</span> stroke_rect r <span class="Statement">(</span>x, y<span class="Statement">)</span> <span class="Statement">=</span>
+  <span class="PreProc">Render</span>.set_draw_color r <span class="Statement">(</span><span class="Constant">2</span>, <span class="Constant">20</span>, <span class="Constant">120</span><span class="Statement">)</span><span class="Statement">;</span>
+  <span class="PreProc">Render</span>.draw_rect r <span class="Statement">(</span>x, y, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span><span class="Statement">;</span>
+<span class="Statement">;;</span>
+</pre>
+
+-->
+
+<hr />
+
+<h3>graphics_one-sprite</h3>
+
+<pre class="ocaml-code">
+  <span class="Statement">let</span> s <span class="Statement">=</span> <span class="PreProc">Surface</span>.load_bmp <span class="Statement">~</span><span class="Identifier">file</span>:<span class="Constant">&quot;./one-sprite.bmp&quot;</span> <span class="Statement">in</span>
+  <span class="Statement">let</span> t <span class="Statement">=</span> <span class="PreProc">Texture</span>.create_texture_from_surface r s <span class="Statement">in</span>
+
+  <span class="Statement">let</span> draw_sprite <span class="Statement">(</span>x, y<span class="Statement">)</span> <span class="Statement">=</span>
+    <span class="PreProc">Render</span>.render_texture r t <span class="Statement">(</span><span class="Constant">0</span>, <span class="Constant">0</span>, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span> <span class="Statement">(</span>x, y, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span><span class="Statement">;</span>
+  <span class="Statement">in</span>
+</pre>
+
+<!--
+<p>One image, with one sprite, with size:
+<code><span class="Statement">(</span><span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span></code>,
+to be drawn at position:
+<code><span class="Statement">(</span>x, y<span class="Statement">)</span></code>.</p>
+-->
+<p>One image, with one sprite, with size:
+<code>(20, 20)</span></code>,
+to be drawn at position:
+<code>(x, y)</span></code>.</p>
+
+<p><code>(0, 0)</span></code>, is the position of the rectangle, in the source image.</p>
+
+<p>It is drawn, with the same size, <code>(w, h)</span></code>, than in the original image.</p>
+
+<hr />
+
+<h3>graphics_sprite-atlas</h3>
+
+<p>Group all the sprites, in a single atlas.</p>
+
+<pre class="ocaml-code">
+  <span class="Statement">let</span> s <span class="Statement">=</span> <span class="PreProc">Surface</span>.load_bmp <span class="Statement">~</span><span class="Identifier">file</span>:<span class="Constant">&quot;./graphics-atlas.bmp&quot;</span> <span class="Statement">in</span>
+  <span class="PreProc">Surface</span>.set_color_key s <span class="Statement">(</span><span class="Constant">255</span>, <span class="Constant">0</span>, <span class="Constant">255</span><span class="Statement">)</span><span class="Statement">;</span>
+  <span class="Statement">let</span> t <span class="Statement">=</span> <span class="PreProc">Texture</span>.create_texture_from_surface r s <span class="Statement">in</span>
+
+  <span class="Statement">let</span> draw_sprite pos sprite <span class="Statement">=</span>
+    <span class="PreProc">Render</span>.render_texture r t <span class="Statement">(</span>src_rect<span class="Statement">)</span> <span class="Statement">(</span>dst_rest<span class="Statement">)</span><span class="Statement">;</span>
+  <span class="Statement">in</span>
+</pre>
+
+<p>The color-key is the color to be used as transparent-pixel.</p>
+
+<!--
+
+<hr />
+
+<pre class="ocaml-code">
+<span class="Statement">let</span> load_graphics r <span class="Statement">=</span>
+  <span class="Statement">let</span> s <span class="Statement">=</span> <span class="PreProc">Surface</span>.load_bmp <span class="Statement">~</span><span class="Identifier">file</span>:<span class="Constant">&quot;./sprite.bmp&quot;</span> <span class="Statement">in</span>
+  <span class="Statement">let</span> t <span class="Statement">=</span> <span class="PreProc">Texture</span>.create_texture_from_surface r s <span class="Statement">in</span>
+  <span class="Statement">(</span>t<span class="Statement">)</span>
+
+<span class="Statement">let</span> draw_sprite r <span class="Statement">(</span>x, y<span class="Statement">)</span> <span class="Statement">=</span>
+  <span class="Statement">let</span> src_rect <span class="Statement">=</span> <span class="Statement">(</span><span class="Constant">0</span>, <span class="Constant">0</span>, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span> <span class="Statement">in</span>
+  <span class="Statement">let</span> dst_rect <span class="Statement">=</span> <span class="Statement">(</span>x, y, <span class="Constant">20</span>, <span class="Constant">20</span><span class="Statement">)</span> <span class="Statement">in</span>
+  <span class="PreProc">Render</span>.render_texture r t <span class="Statement">(</span>src_rect<span class="Statement">)</span> <span class="Statement">(</span>dst_rect<span class="Statement">)</span><span class="Statement">;</span>
+<span class="Statement">;;</span>
+</pre>
+
+-->
 
 <hr />
 
