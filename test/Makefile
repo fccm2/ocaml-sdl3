@@ -7,4 +7,4 @@ all: test.opt test7.opt
 	ocamlopt -I $(INCLUDE_DIR) sdl3.cmxa $< -o $@
 
 clean:
-	$(RM) *.o *.cm[ioxt] *.exe *.opt
+	$(RM) *.o *.cm[ioxt] *.exe *.opt *.byte
