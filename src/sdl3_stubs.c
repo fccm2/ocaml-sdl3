@@ -305,6 +305,15 @@ caml_SDL_LoadBMP(value file)
 }
 
 CAMLprim value
+caml_SDL_LoadBMP_IO(value s)
+{
+    SDL_IOStream *io = SDL_IOFromMem(Bytes_val(s), caml_string_length(s));
+    SDL_Surface *surf = SDL_LoadBMP_IO(io, true);
+    if (surf == NULL) caml_failwith("SDL_LoadBMP_IO()");
+    return Val_sdlsurface(surf);
+}
+
+CAMLprim value
 caml_SDL_DestroySurface(value surf)
 {
     SDL_DestroySurface(SDL_Surface_val(surf));

@@ -90,6 +90,9 @@ module Surface = struct
   external load_bmp : file:string -> surface
     = "caml_SDL_LoadBMP"
 
+  external load_bmp_s : s:string -> surface
+    = "caml_SDL_LoadBMP_IO"
+
   external destroy : surface -> unit
     = "caml_SDL_DestroySurface"
 

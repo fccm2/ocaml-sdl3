@@ -54,6 +54,7 @@ end
 
 module Surface : sig
   val load_bmp : file:string -> surface
+  val load_bmp_s : s:string -> surface
   val destroy : surface -> unit
   val set_color_key : surface -> int * int * int -> unit
 end
