@@ -24,8 +24,9 @@ end
 
 type event =
   | Unhandled_event
-  | Mouse_motion of int * int
   | Key_down_event of Scancode.t
+  | Mouse_motion_event of int * int
+  | Mouse_button_event of int * int * bool
   | Quit_event
 
 val init : unit -> unit

@@ -34,7 +34,7 @@ module UserApp = struct
       begin
         match e with
         | Unhandled_event -> ()
-        | Mouse_motion (x, y) ->
+        | Mouse_motion_event (x, y) ->
             Printf.printf " %d %d\n%!" x y;
         | Key_down_event c ->
             begin match c with

@@ -82,23 +82,35 @@ Val_some(value v)
 /* Convert Events to ocaml values */
 
 static value
+Val_key_down_event(int c)
+{
+    CAMLparam0();
+    CAMLlocal1(m);
+    m = caml_alloc(1, 0);
+    Store_field(m, 0, Val_int(c));
+    CAMLreturn(m);
+}
+
+static value
 Val_mouse_motion_event(int x, int y)
 {
     CAMLparam0();
     CAMLlocal1(m);
-    m = caml_alloc(2, 0);
+    m = caml_alloc(2, 1);
     Store_field(m, 0, Val_int(x));
     Store_field(m, 1, Val_int(y));
     CAMLreturn(m);
 }
 
 static value
-Val_key_down_event(int c)
+Val_mouse_button_event(SDL_MouseButtonEvent *button, int state)
 {
     CAMLparam0();
     CAMLlocal1(m);
-    m = caml_alloc(1, 1);
-    Store_field(m, 0, Val_int(c));
+    m = caml_alloc(3, 2);
+    Store_field(m, 0, Val_int(button->x));
+    Store_field(m, 1, Val_int(button->y));
+    Store_field(m, 2, Val_int(state));
     CAMLreturn(m);
 }
 
@@ -378,10 +390,16 @@ caml_SDL_PollEvent(value u)
     switch (event.type) {
     case SDL_EVENT_QUIT:
         return Val_some(Val_int(1));
-    case SDL_EVENT_MOUSE_MOTION:
-        return Val_some(Val_mouse_motion_event(event.motion.x, event.motion.y));
     case SDL_EVENT_KEY_DOWN:
         return Val_some(Val_event_key_down(&(event.key)));
+    case SDL_EVENT_MOUSE_MOTION:
+        return Val_some(Val_mouse_motion_event(event.motion.x, event.motion.y));
+
+    case SDL_EVENT_MOUSE_BUTTON_DOWN:
+        return Val_some(Val_mouse_button_event(&(event.button), 1));
+    case SDL_EVENT_MOUSE_BUTTON_UP:
+        return Val_some(Val_mouse_button_event(&(event.button), 0));
+
     default:
         return Val_some(Val_int(0));
     }
