@@ -180,6 +180,8 @@ Val_event_key_down(SDL_KeyboardEvent *key)
             case SDLK_7: return Val_key_down_event(37);
             case SDLK_8: return Val_key_down_event(38);
             case SDLK_9: return Val_key_down_event(39);
+
+            default: return Val_int(0);
             }
         }
     }
